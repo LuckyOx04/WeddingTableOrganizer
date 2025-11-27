@@ -12,7 +12,11 @@ public class Family : IComponent
 
     public void AddComponent(IComponent component)
     {
-        _components.Add(component);
+        if (component is Person)
+        {
+            _components.Add(component);
+        }
+        throw new InvalidOperationException($"You can only add components of type {nameof(Person)} to {nameof(Family)}");
     }
     public void RemoveComponent(IComponent component)
     {

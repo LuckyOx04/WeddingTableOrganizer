@@ -4,7 +4,10 @@ public class Table : IComponent
 {
     private readonly List<IComponent> _components = new ();
     private readonly string _tableName;
-    public const int MaxSeats = 10;
+    private int _currentFamilies;
+    private int _currentTakenSeats;
+    private const int MaxSeats = 10;
+    private const int MaxFamilies = 2;
 
     public Table(string tableName)
     {
@@ -13,7 +16,21 @@ public class Table : IComponent
 
     public void AddComponent(IComponent component)
     {
-        _components.Add(component);
+        if (component is Family && _currentFamilies < MaxFamilies)
+        {
+            _components.Add(component);
+            _currentFamilies++;
+            _currentTakenSeats += component.GetSize();
+        }
+        else if (component is Person && _currentTakenSeats < MaxSeats)
+        {
+            _components.Add(component);
+            _currentTakenSeats++;
+        }
+        else
+        {
+            throw new InvalidOperationException($"This exceeds family or people capacity for table {_tableName}");
+        }
     }
 
     public void RemoveComponent(IComponent component)
