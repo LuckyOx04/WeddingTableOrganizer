@@ -5,7 +5,7 @@ namespace Logic.Iterator;
 public class TableIterator : IIterator<Table>
 {
     private readonly List<Table> _tables;
-    private int _position = 0;
+    private int _position;
     
     public TableIterator(List<Table> tables)
     {
