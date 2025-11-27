@@ -4,13 +4,13 @@ using Logic.Iterator;
 
 namespace WeddingTableOrganizer.Model;
 
-public class SeatingArrangement : IIterable<Table>
+public class SeatingArrangement : IIterable<IComponent>
 {
-    private List<Table> _tables;
+    private List<IComponent> _tables;
     
-    public List<Table> Tables => _tables;
+    public List<IComponent> Tables => _tables;
     public void AddTable(Table table) => _tables.Add(table);
     public void ClearTables() => _tables.Clear();
     
-    public IIterator<Table> CreateIterator() => new TableIterator(_tables);
+    public IIterator<IComponent> CreateIterator() => new ComponentIterator(_tables);
 }

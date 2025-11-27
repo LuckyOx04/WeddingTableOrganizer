@@ -1,6 +1,8 @@
+using Logic.Iterator;
+
 namespace Logic.Composite;
 
-public class Family : IComponent
+public class Family : IComponent, IIterable<IComponent>
 {
     private readonly List<IComponent> _components = new();
     private readonly string _familyName;
@@ -25,4 +27,6 @@ public class Family : IComponent
     
     public int GetSize() => _components.Sum(c => c.GetSize());
     public string GetName() => _familyName;
+    
+    public IIterator<IComponent> CreateIterator() => new ComponentIterator(_components);
 }
