@@ -36,7 +36,9 @@ public class Table : IComponent, IIterable<IComponent>
         {
             if (HasFamilyConflict(component))
             {
-                throw new InvalidOperationException($"Table {_tableName} has a conflict with family {component.GetName()}");
+                Console.Error.WriteLine($"Table {_tableName} has a conflict with family {component.GetName()}");
+                Console.Error.WriteLine($"Family conflict with family {component.GetName()} skipped.");
+                return;
             }
             _components.Add(component);
             _currentFamilies++;
@@ -49,7 +51,7 @@ public class Table : IComponent, IIterable<IComponent>
         }
         else
         {
-            throw new InvalidOperationException($"This exceeds family or people capacity for table {_tableName}");
+            Console.Error.WriteLine($"This exceeds family or people capacity for table {_tableName}\nSkipped.");
         }
     }
 

@@ -6,7 +6,7 @@ namespace WeddingTableOrganizer.Model;
 
 public class SeatingArrangement : IIterable<IComponent>
 {
-    private List<IComponent> _tables;
+    private List<IComponent> _tables = new();
     
     public List<IComponent> Tables => _tables;
     public void AddTable(Table table) => _tables.Add(table);

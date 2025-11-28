@@ -3,6 +3,7 @@
   <component name="AvaloniaProject">
     <option name="projectPerEditor">
       <map>
+        <entry key="UserInterface/App.axaml" value="UserInterface/UserInterface.csproj" />
         <entry key="UserInterface/MainWindow.axaml" value="UserInterface/UserInterface.csproj" />
         <entry key="WeddingTableOrganizer/MainWindow.axaml" value="WeddingTableOrganizer/WeddingTableOrganizer.csproj" />
       </map>

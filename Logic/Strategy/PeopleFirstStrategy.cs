@@ -10,14 +10,7 @@ public class PeopleFirstStrategy : ISeatingStrategy
         {
             foreach (var table in tables)
             {
-                try
-                {
-                    table.AddComponent(person);
-                }
-                catch (InvalidOperationException e)
-                {
-                    Console.Error.WriteLine(e.Message);
-                }
+                table.AddComponent(person);
             }
         }
 
@@ -25,14 +18,7 @@ public class PeopleFirstStrategy : ISeatingStrategy
         {
             foreach (var table in tables)
             {
-                try
-                {
-                    table.AddComponent(family);
-                }
-                catch (InvalidOperationException e)
-                {
-                    Console.Error.WriteLine(e);
-                }
+                table.AddComponent(family);
             }
         }
     }
