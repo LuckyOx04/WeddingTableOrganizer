@@ -1,24 +1,33 @@
 using Logic.Composite;
+using Logic.Iterator;
 
 namespace Logic.Strategy;
 
 public class PeopleFirstStrategy : ISeatingStrategy
 {
-    public void Assign(List<Table> tables, List<IComponent> components)
+    public void Assign(IIterator<IComponent> tables, IIterator<IComponent> components)
     {
-        foreach (var person in components.OfType<Person>())
+        while (components.HasNext())
         {
-            foreach (var table in tables)
+            if (components.Next() is Person person)
             {
-                table.AddComponent(person);
+                while (tables.HasNext())
+                {
+                    Table table = (Table)tables.Next();
+                    table.AddComponent(person);
+                }
             }
         }
-
-        foreach (var family in components.OfType<Family>())
+        
+        while (components.HasNext())
         {
-            foreach (var table in tables)
+            if (components.Next() is Family family)
             {
-                table.AddComponent(family);
+                while (tables.HasNext())
+                {
+                    Table table = (Table)tables.Next();
+                    table.AddComponent(family);
+                }
             }
         }
     }

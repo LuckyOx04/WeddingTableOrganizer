@@ -1,8 +1,9 @@
 using Logic.Composite;
+using Logic.Iterator;
 
 namespace Logic.Strategy;
 
 public interface ISeatingStrategy
 {
-    public void Assign(List<Table> tables, List<IComponent> components);
+    public void Assign(IIterator<IComponent> tables, IIterator<IComponent> components);
 }

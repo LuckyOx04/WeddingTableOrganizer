@@ -17,8 +17,9 @@ public class Family : IComponent, IIterable<IComponent>
         if (component is Person)
         {
             _components.Add(component);
+            return;
         }
-        throw new InvalidOperationException($"You can only add components of type {nameof(Person)} to {nameof(Family)}");
+        Console.Error.WriteLine($"You can only add components of type {nameof(Person)} to {nameof(Family)}");
     }
     public void RemoveComponent(IComponent component)
     {
