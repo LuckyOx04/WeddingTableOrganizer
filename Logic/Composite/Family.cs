@@ -25,6 +25,11 @@ public class Family : IComponent, IIterable<IComponent>
     {
         _components.Remove(component);
     }
+
+    public bool Contains(IComponent component)
+    {
+        return _components.Contains(component);
+    }
     
     public int GetSize() => _components.Sum(c => c.GetSize());
     public string GetName() => _familyName;

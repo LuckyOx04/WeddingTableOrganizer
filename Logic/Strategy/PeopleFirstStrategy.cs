@@ -14,7 +14,10 @@ public class PeopleFirstStrategy : ISeatingStrategy
                 while (tables.HasNext())
                 {
                     Table table = (Table)tables.Next();
-                    table.AddComponent(person);
+                    if (!table.Contains(person))
+                    {
+                        table.AddComponent(person);
+                    }
                 }
             }
         }
@@ -26,7 +29,10 @@ public class PeopleFirstStrategy : ISeatingStrategy
                 while (tables.HasNext())
                 {
                     Table table = (Table)tables.Next();
-                    table.AddComponent(family);
+                    if (!table.Contains(family))
+                    {
+                        table.AddComponent(family);
+                    }
                 }
             }
         }
