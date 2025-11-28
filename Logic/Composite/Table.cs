@@ -10,36 +10,16 @@ public class Table : IComponent, IIterable<IComponent>
     private int _currentTakenSeats;
     private const int MaxSeats = 10;
     private const int MaxFamilies = 2;
-    public HashSet<(string, string)> FamilyConflicts { get; set; } = new();
 
     public Table(string tableName)
     {
         _tableName = tableName;
     }
 
-    private bool HasFamilyConflict(IComponent component)
-    {
-        foreach (var family in _components.OfType<Family>())
-        {
-            if (FamilyConflicts.Contains((component.GetName(), family.GetName()))
-                || FamilyConflicts.Contains((family.GetName(), component.GetName())))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public void AddComponent(IComponent component)
     {
         if (component is Family && _currentFamilies < MaxFamilies)
         {
-            if (HasFamilyConflict(component))
-            {
-                Console.Error.WriteLine($"Table {_tableName} has a conflict with family {component.GetName()}");
-                Console.Error.WriteLine($"Family conflict with family {component.GetName()} skipped.");
-                return;
-            }
             _components.Add(component);
             _currentFamilies++;
             _currentTakenSeats += component.GetSize();

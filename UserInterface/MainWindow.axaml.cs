@@ -17,19 +17,24 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
 
-        var family1 = new Family("Smith");
-        family1.AddComponent(new Person("John"));
-        family1.AddComponent(new Person("Jane"));
+        var family1 = new Family("Nikolov");
+        family1.AddComponent(new Person("Ivaylo Nikolov"));
+        family1.AddComponent(new Person("Dimitar Nikolov"));
+        family1.AddComponent(new Person("Viktor Nikolov"));
 
-        var family2 = new Family("Brown");
-        family2.AddComponent(new Person("Mike"));
-        family2.AddComponent(new Person("Anna"));
+        var family2 = new Family("Ivanov");
+        family2.AddComponent(new Person("Martin Ivanov"));
+        family2.AddComponent(new Person("Stefan Ivanov"));
 
-        var family3 = new Family("Johnson");
-        family3.AddComponent(new Person("Peter"));
+        var family3 = new Family("Stoyanov");
+        family3.AddComponent(new Person("Petar Stoyanov"));
+        family3.AddComponent(new Person("Ivan Stoyanov"));
 
-        var person1 = new Person("Ivan");
-        var person2 = new Person("George");
+        var person1 = new Person("Kalin Veselinov");
+        var person2 = new Person("Georgi Marinov");
+
+        var conflicts = new HashSet<(string, string)>();
+        conflicts.Add(("Ivanov", "Nikolov"));
         
         _components.Add(family1);
         _components.Add(family2);
@@ -42,6 +47,8 @@ public partial class MainWindow : Window
         _tables.Add(new Table("Table 2"));
         _tables.Add(new Table("Table 3"));
         RefreshTablesList();
+        
+        _tables[0]
         
         _strategy = new FamiliesFirstStrategy();
     }
