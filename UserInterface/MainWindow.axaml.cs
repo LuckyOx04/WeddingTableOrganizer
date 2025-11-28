@@ -119,4 +119,9 @@ public partial class MainWindow : Window
     {
         throw new System.NotImplementedException();
     }
+
+    private void AddConflict_Click(object? sender, RoutedEventArgs e)
+    {
+        throw new System.NotImplementedException();
+    }
 }
