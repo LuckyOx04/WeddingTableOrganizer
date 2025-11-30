@@ -31,7 +31,7 @@
                      ItemsSource="{Binding GuestsStrings, Mode=OneWay}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Label Content="{Binding}"></Label>
+                        <Label Content="{Binding}"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>    
