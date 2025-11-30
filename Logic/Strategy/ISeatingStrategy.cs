@@ -6,5 +6,5 @@ namespace Logic.Strategy;
 public interface ISeatingStrategy
 {
     public void Assign(IIterator<IComponent> tables, IIterator<IComponent> components,
-        HashSet<(string, string)> conflicts);
+        HashSet<Tuple<string, string>> conflicts);
 }

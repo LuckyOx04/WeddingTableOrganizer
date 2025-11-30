@@ -2,6 +2,6 @@ namespace Logic.Composite;
 
 public interface IComponent
 {
-    int GetSize();
-    string GetName();
+    public int Size { get; }
+    public string Name { get; }
 }

@@ -2,13 +2,11 @@ namespace Logic.Composite;
 
 public class Person : IComponent
 {
-    private readonly string _name;
-
+    public int Size => 1;
+    public string Name { get; }
+    
     public Person(string name)
     {
-        _name = name;
+        Name = name;
     }
-    
-    public int GetSize() => 1;
-    public string GetName() => _name;
 }

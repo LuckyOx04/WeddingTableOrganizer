@@ -6,7 +6,7 @@ namespace Logic.Strategy;
 public class FamiliesFirstStrategy : ISeatingStrategy
 {
     public void Assign(IIterator<IComponent> tables, IIterator<IComponent> components,
-        HashSet<(string, string)> conflicts)
+        HashSet<Tuple<string, string>> conflicts)
     {
         while (components.HasNext())
         {
@@ -41,12 +41,12 @@ public class FamiliesFirstStrategy : ISeatingStrategy
     }
     
     private bool HasFamilyConflict(IComponent newFamily, IIterator<IComponent> families,
-        HashSet<(string, string)> conflicts)
+        HashSet<Tuple<string, string>> conflicts)
     {
         while (families.HasNext()){
             IComponent currentFamily = families.Next();
-            if (conflicts.Contains((newFamily.GetName(), currentFamily.GetName()))
-                || conflicts.Contains((currentFamily.GetName(), newFamily.GetName())))
+            if (conflicts.Contains(new Tuple<string, string>(newFamily.Name, currentFamily.Name))
+                || conflicts.Contains(new Tuple<string, string>(currentFamily.Name, newFamily.Name)))
             {
                 return true;
             }

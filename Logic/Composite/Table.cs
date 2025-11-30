@@ -5,15 +5,17 @@ namespace Logic.Composite;
 public class Table : IComponent, IIterable<IComponent>
 {
     private readonly List<IComponent> _components = new ();
-    private readonly string _tableName;
     private int _currentFamilies;
     private int _currentTakenSeats;
     private const int MaxSeats = 10;
     private const int MaxFamilies = 2;
+    
+    public int Size => _components.Sum(c => c.Size);
+    public string Name { get; }
 
     public Table(string tableName)
     {
-        _tableName = tableName;
+        Name = tableName;
     }
 
     public void AddComponent(IComponent component)
@@ -22,7 +24,7 @@ public class Table : IComponent, IIterable<IComponent>
         {
             _components.Add(component);
             _currentFamilies++;
-            _currentTakenSeats += component.GetSize();
+            _currentTakenSeats += component.Size;
         }
         else if (component is Person && _currentTakenSeats < MaxSeats)
         {
@@ -31,7 +33,7 @@ public class Table : IComponent, IIterable<IComponent>
         }
         else
         {
-            Console.Error.WriteLine($"This exceeds family or people capacity for table {_tableName}\nSkipped.");
+            Console.Error.WriteLine($"This exceeds family or people capacity for table {Name}\nSkipped.");
         }
     }
 
@@ -44,9 +46,6 @@ public class Table : IComponent, IIterable<IComponent>
     {
         return _components.Contains(component);
     }
-    
-    public int GetSize() => _components.Sum(c => c.GetSize());
-    public string GetName() => _tableName;
     
     public IIterator<IComponent> CreateIterator() => new ComponentIterator(_components);
 }

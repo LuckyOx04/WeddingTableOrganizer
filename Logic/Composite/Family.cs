@@ -5,11 +5,13 @@ namespace Logic.Composite;
 public class Family : IComponent, IIterable<IComponent>
 {
     private readonly List<IComponent> _components = new();
-    private readonly string _familyName;
+    
+    public int Size => _components.Sum(c => c.Size);
+    public string Name { get; }
 
     public Family(string familyName)
     {
-        _familyName = familyName;
+        Name = familyName;
     }
 
     public void AddComponent(IComponent component)
@@ -30,9 +32,6 @@ public class Family : IComponent, IIterable<IComponent>
     {
         return _components.Contains(component);
     }
-    
-    public int GetSize() => _components.Sum(c => c.GetSize());
-    public string GetName() => _familyName;
-    
+
     public IIterator<IComponent> CreateIterator() => new ComponentIterator(_components);
 }
