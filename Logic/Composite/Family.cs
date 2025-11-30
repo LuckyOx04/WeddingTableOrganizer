@@ -23,15 +23,6 @@ public class Family : IComponent, IIterable<IComponent>
         }
         Console.Error.WriteLine($"You can only add components of type {nameof(Person)} to {nameof(Family)}");
     }
-    public void RemoveComponent(IComponent component)
-    {
-        _components.Remove(component);
-    }
-
-    public bool Contains(IComponent component)
-    {
-        return _components.Contains(component);
-    }
 
     public IIterator<IComponent> CreateIterator() => new ComponentIterator(_components);
 }

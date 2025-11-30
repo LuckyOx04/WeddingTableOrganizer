@@ -5,36 +5,29 @@ namespace Logic.Strategy;
 
 public class PeopleFirstStrategy : ISeatingStrategy
 {
-    public void Assign(IIterator<IComponent> tables, IIterator<IComponent> components,
+    public void Assign(List<IComponent> tables, List<IComponent> components,
         HashSet<Tuple<string, string>> conflicts)
     {
-        while (components.HasNext())
+        foreach (var person in components.OfType<Person>())
         {
-            if (components.Next() is Person person)
+            foreach (var table in  tables.OfType<Table>())
             {
-                while (tables.HasNext())
+                if (!table.Contains(person))
                 {
-                    Table table = (Table)tables.Next();
-                    if (!table.Contains(person))
-                    {
-                        table.AddComponent(person);
-                    }
+                    table.AddComponent(person);
+                    break;
                 }
             }
         }
         
-        while (components.HasNext())
+        foreach (var family in components.OfType<Family>())
         {
-            if (components.Next() is Family family)
+            foreach (var table in tables.OfType<Table>())
             {
-                while (tables.HasNext())
+                if (!table.Contains(family) && !HasFamilyConflict(family, table.CreateIterator(), conflicts))
                 {
-                    Table table = (Table)tables.Next();
-                    if (!table.Contains(family) && !HasFamilyConflict(family, table.CreateIterator(),
-                            conflicts))
-                    {
-                        table.AddComponent(family);
-                    }
+                    table.AddComponent(family);
+                    break;
                 }
             }
         }

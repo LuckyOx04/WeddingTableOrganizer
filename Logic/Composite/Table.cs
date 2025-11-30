@@ -37,11 +37,6 @@ public class Table : IComponent, IIterable<IComponent>
         }
     }
 
-    public void RemoveComponent(IComponent component)
-    {
-        _components.Remove(component);
-    }
-
     public bool Contains(IComponent component)
     {
         return _components.Contains(component);

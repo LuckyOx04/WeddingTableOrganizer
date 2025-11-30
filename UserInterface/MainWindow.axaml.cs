@@ -1,7 +1,5 @@
-using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using Logic.Composite;
 using WeddingTableOrganizer.ViewModels;
 
 namespace WeddingTableOrganizer;

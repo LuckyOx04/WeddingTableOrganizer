@@ -1,10 +1,9 @@
 using Logic.Composite;
-using Logic.Iterator;
 
 namespace Logic.Strategy;
 
 public interface ISeatingStrategy
 {
-    public void Assign(IIterator<IComponent> tables, IIterator<IComponent> components,
+    public void Assign(List<IComponent> tables, List<IComponent> components,
         HashSet<Tuple<string, string>> conflicts);
 }

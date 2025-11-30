@@ -58,9 +58,9 @@ public class MainWindowViewModel : INotifyPropertyChanged
         set => SetField(ref field, value);
     } = new();
 
-    public ObservableCollection<IComponent> Tables { get; } = new();
+    private List<IComponent> Tables { get; } = new();
 
-    public ObservableCollection<IComponent> Guests { get; } = new();
+    private List<IComponent> Guests { get; } = new();
     public ObservableCollection<Family> Families => new(Guests.OfType<Family>().Append(new Family("None")));
 
     public ObservableCollection<string> GuestsStrings { get; } = new();
@@ -72,6 +72,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
         {
             Guests.Add(new Family(NewFamily));
             OnPropertyChanged(nameof(Families));
+            NewFamily = string.Empty;
             RefreshGuestsStrings();
         }
     }
@@ -84,6 +85,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
             {
                 Guests.Add(new Person(NewPersonToFamily));
                 RefreshGuestsStrings();
+                NewPersonToFamily = string.Empty;
                 return;
             }
             foreach (var guest in Guests.OfType<Family>())
@@ -91,6 +93,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
                 if (guest.Name == FamilyForNewPerson)
                 {
                     guest.AddComponent(new Person(NewPersonToFamily));
+                    NewPersonToFamily = string.Empty;
                 }
             }
             RefreshGuestsStrings();
@@ -101,25 +104,25 @@ public class MainWindowViewModel : INotifyPropertyChanged
     {
         if (FirstFamilyConflict != string.Empty && SecondFamilyConflict != string.Empty){
             Conflicts.Add(new Tuple<string, string>(FirstFamilyConflict, SecondFamilyConflict));
+            FirstFamilyConflict = string.Empty;
+            SecondFamilyConflict = string.Empty;
         }
     }
     
     public void ArrangeFamilyFirst()
     {
         _seatingStrategy = new FamiliesFirstStrategy();
-        _seatingStrategy.Assign(new ComponentIterator(Tables.ToList()),
-            new ComponentIterator(Guests.ToList()),
+        _seatingStrategy.Assign(Tables.ToList(), Guests.ToList(),
             new HashSet<Tuple<string, string>>(Conflicts));
-        RefreshTablesSrings();
+        RefreshTablesStrings();
     }
 
     public void ArrangePeopleFirst()
     {
         _seatingStrategy = new PeopleFirstStrategy();
-        _seatingStrategy.Assign(new ComponentIterator(Tables.ToList()), 
-            new ComponentIterator(Guests.ToList()),
+        _seatingStrategy.Assign(Tables.ToList(), Guests.ToList(), 
             new HashSet<Tuple<string, string>>(Conflicts));
-        RefreshTablesSrings();
+        RefreshTablesStrings();
     }
 
     public void AddTable()
@@ -132,7 +135,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
             }
         }
         Tables.Add(new Table($"Table {TableNumber}"));
-        RefreshTablesSrings();
+        RefreshTablesStrings();
     }
 
     private void RefreshGuestsStrings()
@@ -158,7 +161,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
         }
     }
 
-    private void RefreshTablesSrings()
+    private void RefreshTablesStrings()
     {
         TablesStrings.Clear();
         foreach (var currentTable in Tables)
@@ -166,11 +169,12 @@ public class MainWindowViewModel : INotifyPropertyChanged
             if (currentTable is Table table)
             {
                 StringBuilder result = new StringBuilder();
-                result.Append($"{table.Name}: ");
+                result.Append($"{table.Name} - {table.Size} People: ");
                 IIterator<IComponent> guestsIterator = table.CreateIterator();
                 while (guestsIterator.HasNext())
                 {
-                    if (guestsIterator.Next() is Family family)
+                    IComponent guest = guestsIterator.Next();
+                    if (guest is Family family)
                     {
                         result.Append($"{family.Name}({family.Size}): ");
                         IIterator<IComponent> peopleIterator = family.CreateIterator();
@@ -178,10 +182,10 @@ public class MainWindowViewModel : INotifyPropertyChanged
                         {
                             result.Append($"{peopleIterator.Next().Name}, ");
                         }
-
+                        result.Remove(result.Length - 2, 2);
                         result.Append("; ");
                     }
-                    else if (guestsIterator.Next() is Person person)
+                    else if (guest is Person person)
                     {
                         result.Append($"{person.Name}({person.Size}); ");
                     }
